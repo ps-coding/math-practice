@@ -1,38 +1,20 @@
-# create-svelte
+# Math Practice
+## How to use
+### Question types
+- Answer addition, subtraction, multiplication, division, exponent, and root questions
+- The questions get harder the more questions you answer
+- The difficulty changes at different rates: root and exponent questions increase in number logarithmically while the main four operations increase linearly, yet even then at a different speed
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+### Scores and coins
+- If you don't answer a question in 10 seconds, you move back a level
+- If you are on level 1 and you fail to answer the question in time, you lose the game and can restart
+- Your high score is saved locally, and you starting number of coins for each round is calculated based on your high score
+- You additionally earn a coin for each correct answer and lose a coin for not answering the question in time
 
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
-
-```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+## How to run (dev)
+- Make sure you have [node](https://nodejs.org/en/) and npm
+- Clone the repo
+- Run `npm install` to get the dependencies
+- Execute `npm run dev` in the terminal
+- Open your browser to the localhost address displayed
+- Enjoy!
