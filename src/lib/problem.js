@@ -53,12 +53,12 @@ export function getProblem(maxDifficulty) {
 		secondNum = randomNumBetween(1, 4 * maxDifficulty);
 		firstNum = answer * secondNum;
 	} else if (operation == '^') {
-		firstNum = randomNumBetween(1, 2 * Math.ceil(maxDifficulty / 5));
-		secondNum = randomNumBetween(2, 2 * Math.ceil(maxDifficulty / 5) + 1);
+		firstNum = randomNumBetween(1, 2 * Math.ceil(Math.log(maxDifficulty / 5)) + 3);
+		secondNum = randomNumBetween(2, 2 * Math.ceil(Math.log(maxDifficulty / 5)) + 2);
 		answer = Math.pow(firstNum, secondNum);
 	} else {
-		answer = randomNumBetween(1, 2 * Math.ceil(maxDifficulty / 5));
-		firstNum = randomNumBetween(2, 2 * Math.ceil(maxDifficulty / 5) + 1);
+		answer = randomNumBetween(1, 2 * Math.ceil(Math.log(maxDifficulty / 5)) + 3);
+		firstNum = randomNumBetween(2, 2 * Math.ceil(Math.log(maxDifficulty / 5)) + 2);
 		secondNum = Math.pow(answer, firstNum);
 	}
 

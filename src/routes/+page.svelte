@@ -2,7 +2,7 @@
 	import { getProblem } from '$lib/problem';
 	import { browser } from '$app/environment';
 
-	let correct = 0;
+	let correct = -2; // MAGIC NUMBERS: -2 is start; -1 is restart. The -1 is useful because it happens automatically once the user fails level 1, and -2 just made sense to avoid using an extra variable and to keep everything consistent.
 
 	let highScore = parseInt((browser && localStorage.getItem('highScore')) || '0');
 
@@ -33,38 +33,65 @@
 			}
 		}
 	}, 1000);
+
+	const yearTag = new Date().getFullYear() <= 2023 ? '' : `-${new Date().getFullYear()}`;
+
+	let selectable = false;
 </script>
 
 <svelte:head>
-	<title>Math Practice</title>
-	<meta name="description" content="Practice your math skills with this simple game." />
+	<title>Math Practice - Arithmetic Trainer</title>
+	<meta
+		name="description"
+		content="Practice your math skills with this simple game. You can practice addition, subtraction, multiplication, division, exponentiation, and roots. The game tracks your high score locally, uses coins as an in-game currency to buy additional time on a problem, and dynamically increases the difficulty of problems at different paces for different types of questions."
+	/>
+	<meta
+		name="keywords"
+		content="math practice trainer addition sum subtraction difference multiplication product division quotient root roots exponents exponentiation dynamic difficulty coins currency high score"
+	/>
 </svelte:head>
 
+<header class="top">
+	<!-- svelte-ignore a11y-invalid-attribute -->
+	<h1><a class="title" href="javascript:location.reload()">Math Practice</a></h1>
+	{#if correct >= 0 && coins > 0}
+		<button
+			class="button coins"
+			disabled={coins < 2}
+			on:click={() => {
+				if (coins >= 2) {
+					coins -= 2;
+					secondsLeft += 3;
+				}
+			}}><span>Coins: {coins}</span></button
+		>
+	{/if}
+</header>
 <main>
-	<header class="top">
-		<a class="title" href="/">Math Practice</a>
-		{#if correct >= 0 && coins > 0}
-			<button
-				class="button coins"
-				on:click={() => {
-					if (coins >= 2) {
-						coins -= 2;
-						secondsLeft += 3;
-					}
-				}}><span>Coins: {coins}</span></button
-			>
-		{/if}
-	</header>
-
-	<span class="highScore" bind:this={highScoreEl}>High Score: {highScore + 1}</span>
+	{#if highScore > 0}
+		<span class="highScore" bind:this={highScoreEl}
+			>High Score: <span class="em">{highScore + 1}</span></span
+		>
+	{/if}
 
 	{#if correct >= 0}
-		<span class="problem">
-			<span class={problem.operation == '√' ? 'r-index' : 'firstNum'}>{problem.firstNum}</span>
-			<span class="operation">{problem.operation}</span>
-			<span class={problem.operation == '√' ? 'r-radicand' : 'secondNum'}>{problem.secondNum}</span>
+		<b class={'problem' + (selectable ? '' : ' unselectable')}>
+			{#if problem.operation != '√' || problem.firstNum != 2}
+				<span
+					class={problem.operation == '√' ? 'r-index' : problem.operation != '^' ? 'firstNum' : ''}
+					>{problem.firstNum}</span
+				>
+			{/if}
+			{#if problem.operation != '^'}
+				<span class="operation">{problem.operation}</span>
+				<span class={problem.operation == '√' ? 'r-radicand' : 'secondNum'}
+					>{problem.secondNum}
+				</span>
+			{:else}
+				<sup class="exponent em">{problem.secondNum}</sup>
+			{/if}
 			&nbsp;=
-		</span>
+		</b>
 
 		<!-- svelte-ignore a11y-autofocus -->
 		<input
@@ -128,12 +155,22 @@
 			}}
 		/>
 
-		<span class="level">Level: {correct + 1}</span>
-		<span class="time">Answer in {secondsLeft} {secondsLeft == 1 ? 'second' : 'seconds'}</span>
+		<span class="level">Level: <span class="em">{correct + 1}</span></span>
+		<span class="time"
+			>Answer in <span class="em">{secondsLeft}</span>
+			second{secondsLeft == 1 ? '' : 's'}</span
+		>
 	{:else}
+		<span class="checkbox">
+			<input type="checkbox" id="selectable" bind:checked={selectable} />
+			<label for="selectable"
+				><span class="em">Can{selectable ? '' : 'not'}</span> select (and thus copy & paste) the
+				problem.<br />Select to make it harder to cheat by pasting the question into a calculator.</label
+			>
+		</span>
 		<button
 			hidden={correct >= 0}
-			class="button reset"
+			class={'button ' + (correct == -1 ? 'reset' : 'start')}
 			on:click={() => {
 				userInput = '';
 				correct = 0;
@@ -152,10 +189,13 @@
 						}
 					}
 				}, 1000);
-			}}>Restart</button
+			}}>{correct == -1 ? 'Restart' : 'Start'}</button
 		>
 	{/if}
 </main>
+<footer class="bottom">
+	Copyright &copy; 2023{yearTag} Prasham Shah. All rights reserved.
+</footer>
 
 <style>
 	/* General */
@@ -174,17 +214,22 @@
 		align-items: center;
 	}
 
+	h1 {
+		font-size: 1em;
+	}
+
 	.title {
 		text-align: center;
 		font-family: 'Courier New', Courier, monospace;
 		font-size: 2.75em;
 		margin-block: 10px;
 		text-decoration: none;
+		color: black;
 	}
 
 	.title:hover {
 		font-weight: bold;
-		font-style: italic;
+		color: rgb(100, 100, 255);
 	}
 
 	.highScore {
@@ -211,7 +256,7 @@
 	}
 
 	.operation {
-		color: rgb(0, 255, 255);
+		color: rgb(100, 100, 255);
 	}
 
 	.r-index {
@@ -221,7 +266,19 @@
 
 	.r-radicand {
 		text-decoration: overline;
-		text-decoration-color: rgb(0, 255, 255);
+		text-decoration-color: rgb(100, 100, 255);
+	}
+
+	.exponent {
+		align-self: flex-start;
+		font-size: 0.5em;
+	}
+
+	.unselectable {
+		-webkit-user-select: none;
+		-ms-user-select: none;
+		-moz-user-select: none;
+		user-select: none;
 	}
 
 	/* Answer */
@@ -260,28 +317,34 @@
 		padding: 10px;
 		border: none;
 		border-radius: 10px;
-		background-color: lightcoral;
-		color: lightgoldenrodyellow;
 		transition: all 250ms ease-in-out;
 	}
 
 	.button:hover {
-		background-color: red;
-		color: white;
 		border-radius: 20px;
+		cursor: pointer;
 	}
 
 	.reset {
+		background-color: lightcoral;
+		color: lightgoldenrodyellow;
 		font-size: 1.5em;
+	}
+
+	.reset:hover {
+		background-color: red;
+		color: white;
 	}
 
 	.coins {
 		background-color: yellow;
+		color: black;
 		width: 17ch;
 	}
 
 	.coins:hover {
 		background-color: darkgoldenrod;
+		color: white;
 	}
 
 	.coins:hover span {
@@ -292,12 +355,70 @@
 		content: '2 coins for 3 sec';
 	}
 
-	@media screen and (max-width: 500px) {
+	.coins[disabled],
+	.coins[disabled]:hover,
+	.coins:disabled,
+	.coins:disabled:hover {
+		background-color: lightgray;
+		color: black;
+		border-radius: 0;
+	}
+
+	.coins[disabled]:hover:before,
+	.coins:disabled:hover:before {
+		content: 'Not enough coins';
+	}
+
+	.start {
+		background-color: lightgreen;
+		color: black;
+		font-size: 1.5em;
+	}
+
+	.start:hover {
+		background-color: green;
+		color: white;
+	}
+
+	/* Checkboxes */
+	.checkbox {
+		display: flex;
+		align-items: start;
+		justify-content: center;
+		margin-bottom: 20px;
+	}
+
+	/* Bottom */
+	.bottom {
+		text-align: center;
+		position: absolute;
+		bottom: 15px;
+		left: 0;
+		right: 0;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	/* Emphasis */
+	.em {
+		color: rgb(100, 100, 255);
+	}
+
+	/* Media Queries */
+
+	@media screen and (max-width: 550px) {
 		.top {
 			flex-wrap: wrap;
 		}
 		.title {
 			flex-basis: 100%;
+		}
+	}
+
+	@media screen and (max-height: 600px) {
+		.bottom {
+			margin-top: 40px;
+			position: relative;
 		}
 	}
 </style>
