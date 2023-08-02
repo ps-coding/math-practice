@@ -1,13 +1,14 @@
 <script>
 	import { page } from '$app/stores';
-	import { browser } from '$app/environment';
+	import { onMount } from 'svelte';
 
-	browser &&
+	onMount(() => {
 		page.subscribe((value) => {
 			if (value.status === 404) {
 				location.href = '/';
 			}
 		});
+	});
 </script>
 
 <h1>{$page.status}: {$page.error?.message}</h1>
