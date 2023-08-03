@@ -271,16 +271,21 @@
 			>
 		{/if}
 	{:else}
-		<span class="checkbox">
-			<input type="checkbox" id="selectable" bind:checked={selectable} />
-			<label for="selectable"
-				><span class="em">Can{selectable ? '' : 'not'}</span> select (and thus copy & paste) the
-				problem.<br />Select this option to make cheating by pasting the question into a calculator
-				harder.</label
-			>
-		</span>
+		<hr />
 		<div>
-			You are launching with (based on the saved checkpoint):
+			<b>Options:</b>
+			<span class="checkbox">
+				<input type="checkbox" id="selectable" bind:checked={selectable} />
+				<label for="selectable"
+					><span class="em">Can{selectable ? '' : 'not'}</span> select (and thus copy & paste) the
+					problem.<br />Select this option to make cheating by pasting the question into a
+					calculator harder.</label
+				>
+			</span>
+		</div>
+		<hr />
+		<div>
+			<b>You are launching with (based on the saved checkpoint):</b>
 			<ul>
 				<li><span class="em">{carryOver ? carryOver.toString() + 'x' : 'No'}</span> Carry Over</li>
 				<li>
@@ -289,6 +294,7 @@
 				<li><span class="em">{maxTime} sec</span> Max Time</li>
 			</ul>
 		</div>
+		<hr />
 		<button
 			hidden={correct >= 0}
 			class={'button ' + (correct == -1 ? 'reset' : 'start')}
