@@ -54,6 +54,8 @@
 	let carryOver = 0;
 
 	let bonusTime = 0;
+
+	let maxTime = 60;
 </script>
 
 <svelte:head>
@@ -124,6 +126,17 @@
 					></button
 				>
 			{/if}
+			{#if coins >= 20}
+				<button
+					class="button increaseMax"
+					on:click={() => {
+						if (coins >= 20) {
+							coins -= 20;
+							maxTime += 20;
+						}
+					}}><span>↑ Max Time ({maxTime} sec to {maxTime + 20} sec)</span></button
+				>
+			{/if}
 		</div>
 	{/if}
 </header>
@@ -191,7 +204,7 @@
 						coins++;
 
 						userInput = '';
-						secondsLeft = 10 + bonusTime + secondsLeft * carryOver;
+						secondsLeft = Math.min(10 + bonusTime + secondsLeft * carryOver, maxTime);
 
 						if (correct > highScore) {
 							highScore = correct;
@@ -450,25 +463,6 @@
 		fill: black;
 	}
 
-	.carryOver {
-		background-color: lightskyblue;
-		color: black;
-		width: 30ch;
-	}
-
-	.carryOver:hover {
-		background-color: darkslateblue;
-		color: white;
-	}
-
-	.carryOver:hover span {
-		display: none;
-	}
-
-	.carryOver:hover:before {
-		content: '$ Buy for 30 coins';
-	}
-
 	.bonusTime {
 		background-color: lightskyblue;
 		color: black;
@@ -486,6 +480,44 @@
 
 	.bonusTime:hover:before {
 		content: '$ Buy for 10 coins';
+	}
+
+	.increaseMax {
+		background-color: lightcoral;
+		color: black;
+		width: 30ch;
+	}
+
+	.increaseMax:hover {
+		background-color: darkorange;
+		color: white;
+	}
+
+	.increaseMax:hover span {
+		display: none;
+	}
+
+	.increaseMax:hover:before {
+		content: '$ Buy for 20 coins';
+	}
+
+	.carryOver {
+		background-color: lightskyblue;
+		color: black;
+		width: 30ch;
+	}
+
+	.carryOver:hover {
+		background-color: darkslateblue;
+		color: white;
+	}
+
+	.carryOver:hover span {
+		display: none;
+	}
+
+	.carryOver:hover:before {
+		content: '$ Buy for 30 coins';
 	}
 
 	.start {
@@ -534,11 +566,15 @@
 			margin-left: 10px;
 		}
 
+		.bonusTime {
+			margin-left: 10px;
+		}
+
 		.carryOver {
 			margin-left: 10px;
 		}
 
-		.bonusTime {
+		.increaseMax {
 			margin-left: 10px;
 		}
 
