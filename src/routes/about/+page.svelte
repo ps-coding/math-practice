@@ -66,6 +66,12 @@
 				question (default 0 sec)
 			</li>
 			<li>
+				10 coins: Increment (by +1x) the coin multiplier granted after each answered question
+				(default 1x)
+				<br />
+				<small><i>This does not save in checkpoints.</i></small>
+			</li>
+			<li>
 				20 coins: Increment (by +20 sec) the cap on the maximum amount of time you can start with
 				after each answered question (default 60 sec)
 			</li>

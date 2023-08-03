@@ -4,7 +4,7 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 	<ul><li><a href="#how-to-use">How to use</a>:
 			<ul><li><a href="#question-types">Question types</a></li> <li><a href="#scores-and-coins">Scores and coins</a></li></ul></li> <li><a href="#how-to-run-dev">How to run (dev)</a></li></ul></summary> <h2 id="how-to-use" data-svelte-h="svelte-6r9r48">How to use</h2> <h3 id="question-types" data-svelte-h="svelte-1w79w5d">Question types</h3> <ul data-svelte-h="svelte-1hf64wl"><li>Answer addition, subtraction, multiplication, division, exponent, and root questions</li> <li>The questions get harder the more questions you answer</li> <li>The difficulty changes at different rates: root and exponent questions increase in number
 		logarithmically (ln(n/5) + k) while the main four operations increase linearly, and even then
-		multiplication and division (4n) increase slower than addition and subtraction (10n)</li></ul> <h3 id="scores-and-coins" data-svelte-h="svelte-195d834">Scores and coins</h3> <ul data-svelte-h="svelte-1j8ieri"><li>If you don&#39;t answer a question in the allotted number of seconds (default is 10), you move back
+		multiplication and division (4n) increase slower than addition and subtraction (10n)</li></ul> <h3 id="scores-and-coins" data-svelte-h="svelte-195d834">Scores and coins</h3> <ul data-svelte-h="svelte-kpicka"><li>If you don&#39;t answer a question in the allotted number of seconds (default is 10), you move back
 		a level</li> <li>If you are on level 1 and you fail to answer the question in time, you lose the game and can
 		restart</li> <li>Your high score is saved locally, and your starting number of coins for each round is calculated
 		based on your high score</li> <li>You additionally earn a coin for each correct answer and lose a coin for not answering the
@@ -12,7 +12,9 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 		incorrect question, resulting in you not only losing but also losing all powerups you may have
 		saved using a checkpoint)</li> <li>Powerups:
 		<ul><li>2 coins: 3 seconds of extra time on the current question (default time 10 sec per question)</li> <li>10 coins: Increment (by +2 sec) the amount of extra time granted after each answered
-				question (default 0 sec)</li> <li>20 coins: Increment (by +20 sec) the cap on the maximum amount of time you can start with
+				question (default 0 sec)</li> <li>10 coins: Increment (by +1x) the coin multiplier granted after each answered question
+				(default 1x)
+				<br> <small><i>This does not save in checkpoints.</i></small></li> <li>20 coins: Increment (by +20 sec) the cap on the maximum amount of time you can start with
 				after each answered question (default 60 sec)</li> <li>30 coins: Increment (by +1x) the time multiplier granted after each answered question
 				(default 0x)</li> <li>50 coins and 25 gems (high score points): Save all of the current powerups in a checkpoint
 				so next game you start with those powerups already equipped

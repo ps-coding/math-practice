@@ -23,6 +23,8 @@
 		maxTime = parseInt(localStorage.getItem('maxTime') || '60');
 	});
 
+	let multiplier = 1;
+
 	let userInput = '';
 
 	let secondsLeft = 10;
@@ -191,7 +193,7 @@
 						inputBorderRadius = '0';
 
 						correct++;
-						coins++;
+						coins += multiplier;
 
 						userInput = '';
 						secondsLeft = Math.min(10 + bonusTime + secondsLeft * carryOver, maxTime);
@@ -233,6 +235,7 @@
 									carryOver = parseInt(localStorage.getItem('carryOver') || '0');
 									bonusTime = parseInt(localStorage.getItem('bonusTime') || '0');
 									maxTime = parseInt(localStorage.getItem('maxTime') || '60');
+									multiplier = 1;
 
 									highScore = parseInt(localStorage.getItem('highScore') || '0');
 									coins = highScore * 2;
@@ -270,23 +273,42 @@
 				}}><span>✓ Checkpoint: Save Powerups</span></button
 			>
 		{/if}
+		{#if correct >= 0 && coins >= 10}
+			<button
+				class="button multiplier"
+				on:click={() => {
+					if (coins >= 10) {
+						coins -= 10;
+						multiplier++;
+					}
+				}}
+				><span
+					>× Coin Multiplier ({multiplier != 1 ? multiplier.toString() + 'x ' : ''}to {multiplier +
+						1}x)</span
+				></button
+			>
+		{/if}
 	{:else}
-		<hr />
-		<div>
+		<hr class="break" />
+		<div class="options">
 			<b>Options:</b>
 			<span class="checkbox">
 				<input type="checkbox" id="selectable" bind:checked={selectable} />
 				<label for="selectable"
 					><span class="em">Can{selectable ? '' : 'not'}</span> select (and thus copy & paste) the
-					problem.<br />Select this option to make cheating by pasting the question into a
-					calculator harder.</label
+					problem.
+					<small
+						><i
+							>Select this option to make cheating by pasting the question into a calculator harder.</i
+						></small
+					></label
 				>
 			</span>
 		</div>
-		<hr />
+		<hr class="break" />
 		<div>
 			<b>You are launching with (based on the saved checkpoint):</b>
-			<ul>
+			<ul class="launch">
 				<li><span class="em">{carryOver ? carryOver.toString() + 'x' : 'No'}</span> Carry Over</li>
 				<li>
 					<span class="em">{bonusTime ? bonusTime.toString() + ' sec' : 'No'}</span> Bonus Time
@@ -294,7 +316,7 @@
 				<li><span class="em">{maxTime} sec</span> Max Time</li>
 			</ul>
 		</div>
-		<hr />
+		<hr class="break" />
 		<button
 			hidden={correct >= 0}
 			class={'button ' + (correct == -1 ? 'reset' : 'start')}
@@ -316,6 +338,7 @@
 				carryOver = parseInt(localStorage.getItem('carryOver') || '0');
 				bonusTime = parseInt(localStorage.getItem('bonusTime') || '0');
 				maxTime = parseInt(localStorage.getItem('maxTime') || '60');
+				multiplier = 1;
 
 				if (interval != -1) clearInterval(interval);
 				interval = setInterval(() => {
@@ -346,6 +369,7 @@
 							carryOver = parseInt(localStorage.getItem('carryOver') || '0');
 							bonusTime = parseInt(localStorage.getItem('bonusTime') || '0');
 							maxTime = parseInt(localStorage.getItem('maxTime') || '60');
+							multiplier = 1;
 
 							highScore = parseInt(localStorage.getItem('highScore') || '0');
 							coins = highScore * 2;
@@ -623,6 +647,25 @@
 		content: '$ Buy for 25 gems + 50 coins';
 	}
 
+	.multiplier {
+		background-color: gold;
+		color: black;
+		width: 30ch;
+	}
+
+	.multiplier:hover {
+		background-color: darkred;
+		color: white;
+	}
+
+	.multiplier:hover span {
+		display: none;
+	}
+
+	.multiplier:hover:before {
+		content: '$ Buy for 10 coins [no save]';
+	}
+
 	.start {
 		background-color: lightgreen;
 		color: black;
@@ -651,6 +694,25 @@
 	/* Emphasis */
 	.em {
 		color: var(--accent);
+	}
+
+	/* Section Break */
+	.break {
+		border: 0;
+		clear: both;
+		display: block;
+		width: 96%;
+		background-color: darkgray;
+		height: 1px;
+	}
+
+	/* Misc */
+	.options {
+		text-align: center;
+	}
+
+	.launch {
+		margin-top: 5px;
 	}
 
 	/* Media Queries */
