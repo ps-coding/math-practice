@@ -41,8 +41,17 @@
 		Coin values:
 		<ul>
 			<li>2 coins: 3 seconds of extra time on the current question</li>
-			<li>10 coins: Increment the amount of extra time granted after each answered question</li>
-			<li>30 coins: Increment the time multiplier granted after each answered question</li>
+			<li>
+				10 coins: Increment the amount of extra time granted after each answered question (default 0
+				sec)
+			</li>
+			<li>
+				20 coins: Increment the cap on the maximum amount of time you can start with after each
+				answered question (default 60 sec)
+			</li>
+			<li>
+				30 coins: Increment the time multiplier granted after each answered question (default 0x)
+			</li>
 		</ul>
 	</li>
 </ul>

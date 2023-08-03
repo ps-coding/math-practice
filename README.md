@@ -16,8 +16,9 @@
 - You additionally earn a coin for each correct answer and lose a coin for not answering the question in time
 - Coin values:
   - 2 coins: 3 seconds of extra time on the current question
-  - 10 coins: Increment the amount of extra time granted after each answered question
-  - 30 coins: Increment the time multiplier granted after each answered question
+  - 10 coins: Increment the amount of extra time granted after each answered question (default 0 sec)
+  - 20 coins: Increment the cap on the maximum amount of time you can start with after each answered question (default 60 sec)
+  - 30 coins: Increment the time multiplier granted after each answered question (default 0x)
 
 ## How to run (dev)
 
