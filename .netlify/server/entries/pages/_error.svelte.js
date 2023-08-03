@@ -24,8 +24,9 @@ const Error$1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let $page, $$unsubscribe_page;
   $$unsubscribe_page = subscribe(page, (value) => $page = value);
   $$unsubscribe_page();
-  return `<h1>${escape($page.status)}: ${escape($page.error?.message)}</h1> <p data-svelte-h="svelte-1ug8tq1">It looks like something went wrong. If possible, you will automatically be redirected to the home
-	page. Otherwise, you can click <a href="/">here</a> to go to the home page.</p>`;
+  return `<h1>${escape($page.status)}: ${escape($page.error?.message)}</h1> <p data-svelte-h="svelte-18uhg81">It looks like something went wrong. If possible, you will automatically be redirected to the home
+	(game) page. If this does not occur within a couple of seconds, you can click <a href="/">here</a>
+	to go to the home (game) page.</p>`;
 });
 export {
   Error$1 as default
