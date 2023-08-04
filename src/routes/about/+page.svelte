@@ -19,9 +19,10 @@
 				<li><a href="#question-types">Question types</a></li>
 				<li><a href="#scores-and-coins">Scores and coins</a></li>
 				<li><a href="#powerups">Powerups</a></li>
+				<li><a href="#recover">Recovery</a></li>
 			</ul>
 		</li>
-		<li><a href="#how-to-run-dev">How to run (dev)</a></li>
+		<li><a href="#contribute">How to contribute</a></li>
 	</ul>
 </summary>
 <h2 id="how-to-use">How to use</h2>
@@ -107,7 +108,43 @@
 		>
 	</li>
 </ul>
-<h2 id="how-to-run-dev">How to contribute</h2>
+<h3 id="recover">Recovery</h3>
+<ul>
+	<li>
+		For 5 gems or high score points, you can recover, which means that you will start the next game
+		with the same powerups (including, unlike checkpoints, the same coin multiplier) and the same
+		number of coins as you ended with when you died at level one in the last game
+	</li>
+	<li>This feature is only available if you did not go bankrupt</li>
+	<li>
+		To remove the annoying part of watching the timer count down and waiting to lose every level if
+		you just want to stop playing yet save your recovery data, there is an "I'm Done" button that
+		simply disables all buttons and counts down the levels very quickly, and, assuming you did not
+		go bankrupt in that process, stores all recovery information after you die
+	</li>
+	<li>
+		The "I'm Done" button is the best way to end a game in the middle, instead of just refreshing
+		the page, since refreshing the page does not save recovery data (the only time it could be
+		beneficial just to refresh is if you think you are going to go bankrupt and want to save your
+		gems, and even then if you are playing this competitively with someone else, you might come up
+		with a rule against refreshing)
+	</li>
+</ul>
+<small
+	><i
+		>A common question is why would you recover when there are checkpoints, or vice versa. However,
+		each has its pros and cons, and as a strategic player it is up to you to decide. Remember,
+		recovery costs 5 gems, while a checkpoint costs 25 gems along with 50 coins. However, a
+		checkpoint can be saved at any time during a game, and assuming you do not go bankrupt, the
+		powerups saved in a checkpoint can help you in every game just by pressing "start" without any
+		additional fee. However, coins are not saved in checkpoints, nor are multipliers. Meanwhile,
+		with recovery, you can only save what you had right before you lost, but you can save coins too.
+		Recovery also only lasts once (i.e. you have to pay every time you want to recover from the last
+		round). However, it does save the coin multiplier, which checkpoints don't. So, based on the
+		context, the choice is yours.</i
+	></small
+>
+<h2 id="contribute">How to contribute</h2>
 <p>
 	Feel free to play around with/contribute to this project if you wish, although if you publish a
 	fork, please give credit.

@@ -14,6 +14,16 @@
 
 	let maxTime = 60;
 
+	let canRecover = false;
+
+	let recoveryData = {
+		recoveryCoins: 0,
+		recoveryBonusTime: 0,
+		recoveryMaxTime: 60,
+		recoveryCarryOver: 0,
+		recoveryMultiplier: 1
+	};
+
 	onMount(() => {
 		highScore = parseInt(localStorage.getItem('highScore') || '0');
 		coins = highScore * 2;
@@ -21,6 +31,18 @@
 		carryOver = parseInt(localStorage.getItem('carryOver') || '0');
 		bonusTime = parseInt(localStorage.getItem('bonusTime') || '0');
 		maxTime = parseInt(localStorage.getItem('maxTime') || '60');
+
+		canRecover = localStorage.getItem('canRecover') == 'true';
+
+		if (canRecover) {
+			recoveryData = {
+				recoveryCoins: parseInt(localStorage.getItem('recoveryCoins') || '0'),
+				recoveryBonusTime: parseInt(localStorage.getItem('recoveryBonusTime') || '0'),
+				recoveryMaxTime: parseInt(localStorage.getItem('recoveryMaxTime') || '60'),
+				recoveryCarryOver: parseInt(localStorage.getItem('recoveryCarryOver') || '0'),
+				recoveryMultiplier: parseInt(localStorage.getItem('recoveryMultiplier') || '1')
+			};
+		}
 	});
 
 	let multiplier = 1;
@@ -47,6 +69,8 @@
 	const yearTag = new Date().getFullYear() <= 2023 ? '' : `-${new Date().getFullYear()}`;
 
 	let selectable = false;
+
+	let showBar = true;
 </script>
 
 <svelte:head>
@@ -64,7 +88,7 @@
 <header class="top">
 	<!-- svelte-ignore a11y-invalid-attribute -->
 	<h1 class="outerTitle"><a class="title" href="javascript:location.reload()">Math Practice</a></h1>
-	{#if correct >= 0 && coins > 0}
+	{#if correct >= 0 && coins > 0 && showBar}
 		<div>
 			<button
 				class="button coins"
@@ -218,7 +242,11 @@
 								coins--;
 								userInput = '';
 
+								let bankrupt = false;
+
 								if (coins < -1) {
+									bankrupt = true;
+
 									carryOver = 0;
 									bonusTime = 0;
 									maxTime = 60;
@@ -235,6 +263,26 @@
 								}
 
 								if (correct < 0) {
+									if (!bankrupt) {
+										canRecover = true;
+										localStorage.setItem('canRecover', 'true');
+
+										recoveryData.recoveryCoins = coins;
+										recoveryData.recoveryCarryOver = carryOver;
+										recoveryData.recoveryBonusTime = bonusTime;
+										recoveryData.recoveryMaxTime = maxTime;
+										recoveryData.recoveryMultiplier = multiplier;
+
+										localStorage.setItem('recoveryCoins', coins.toString());
+										localStorage.setItem('recoveryCarryOver', carryOver.toString());
+										localStorage.setItem('recoveryBonusTime', bonusTime.toString());
+										localStorage.setItem('recoveryMaxTime', maxTime.toString());
+										localStorage.setItem('recoveryMultiplier', multiplier.toString());
+									} else {
+										canRecover = false;
+										localStorage.setItem('canRecover', 'false');
+									}
+
 									carryOver = parseInt(localStorage.getItem('carryOver') || '0');
 									bonusTime = parseInt(localStorage.getItem('bonusTime') || '0');
 									maxTime = parseInt(localStorage.getItem('maxTime') || '60');
@@ -260,7 +308,7 @@
 			>Answer in <span class="em">{secondsLeft}</span>
 			second{secondsLeft == 1 ? '' : 's'}</span
 		>
-		{#if correct >= 0 && coins >= 50 && highScore >= 25}
+		{#if correct >= 0 && coins >= 50 && highScore >= 25 && showBar}
 			<button
 				class="button checkpoint"
 				on:click={() => {
@@ -276,7 +324,7 @@
 				}}><span>✓ Checkpoint: Save Powerups</span></button
 			>
 		{/if}
-		{#if correct >= 0 && coins >= 10}
+		{#if correct >= 0 && coins >= 10 && showBar}
 			<button
 				class="button multiplier"
 				on:click={() => {
@@ -289,6 +337,91 @@
 					>× Coin Multiplier ({multiplier != 1 ? multiplier.toString() + 'x ' : ''}to {multiplier +
 						1}x)</span
 				></button
+			>
+		{/if}
+		{#if showBar}
+			<button
+				class="button done"
+				on:click={() => {
+					clearInterval(interval);
+					userInput = '';
+					inputEl.disabled = true;
+
+					inputColor = 'black';
+					inputBackgroundColor = 'transparent';
+					inputBorderRadius = '0';
+
+					highScoreColor = 'black';
+					highScoreBackgroundColor = 'transparent';
+					highScoreBorderRadius = '0';
+
+					showBar = false;
+					secondsLeft = 10;
+
+					let countdown = setInterval(() => {
+						secondsLeft = 0;
+						correct--;
+						coins--;
+
+						if (correct <= -1) {
+							clearInterval(countdown);
+
+							showBar = true;
+
+							let bankrupt = false;
+
+							if (coins < -1) {
+								bankrupt = true;
+
+								carryOver = 0;
+								bonusTime = 0;
+								maxTime = 60;
+								localStorage.setItem('carryOver', '0');
+								localStorage.setItem('bonusTime', '0');
+								localStorage.setItem('maxTime', '60');
+
+								if (highScore >= 1) {
+									highScore -= 1;
+									localStorage.setItem('highScore', highScore.toString());
+								}
+
+								correct = -1;
+							}
+
+							if (correct < 0) {
+								if (!bankrupt) {
+									canRecover = true;
+									localStorage.setItem('canRecover', 'true');
+
+									recoveryData.recoveryCoins = coins;
+									recoveryData.recoveryCarryOver = carryOver;
+									recoveryData.recoveryBonusTime = bonusTime;
+									recoveryData.recoveryMaxTime = maxTime;
+									recoveryData.recoveryMultiplier = multiplier;
+
+									localStorage.setItem('recoveryCoins', coins.toString());
+									localStorage.setItem('recoveryCarryOver', carryOver.toString());
+									localStorage.setItem('recoveryBonusTime', bonusTime.toString());
+									localStorage.setItem('recoveryMaxTime', maxTime.toString());
+									localStorage.setItem('recoveryMultiplier', multiplier.toString());
+								} else {
+									canRecover = false;
+									localStorage.setItem('canRecover', 'false');
+								}
+
+								carryOver = parseInt(localStorage.getItem('carryOver') || '0');
+								bonusTime = parseInt(localStorage.getItem('bonusTime') || '0');
+								maxTime = parseInt(localStorage.getItem('maxTime') || '60');
+								multiplier = 1;
+
+								highScore = parseInt(localStorage.getItem('highScore') || '0');
+								coins = highScore * 2;
+
+								clearInterval(interval);
+							}
+						}
+					}, 300);
+				}}>I'm Done</button
 			>
 		{/if}
 	{:else}
@@ -310,20 +443,27 @@
 		</div>
 		<hr class="break" />
 		<div>
-			<b>You are launching with (based on the saved checkpoint):</b>
+			<b>You are launching with (based on the last saved checkpoint):</b>
 			<ul class="launch">
 				<li><span class="em">{carryOver ? carryOver.toString() + 'x' : 'No'}</span> Carry Over</li>
 				<li>
 					<span class="em">{bonusTime ? bonusTime.toString() + ' sec' : 'No'}</span> Bonus Time
 				</li>
 				<li><span class="em">{maxTime} sec</span> Max Time</li>
+				<li>
+					<span class="em">{highScore ? highScore * 2 : 'No'}</span> coins
+				</li>
+				<li>
+					<span class="em">1x</span> Multiplier
+				</li>
 			</ul>
 		</div>
-		<hr class="break" />
 		<button
 			hidden={correct >= 0}
 			class={'button ' + (correct == -1 ? 'reset' : 'start')}
 			on:click={() => {
+				showBar = true;
+
 				inputColor = 'black';
 				inputBackgroundColor = 'transparent';
 				inputBorderRadius = '0';
@@ -352,7 +492,11 @@
 						coins--;
 						userInput = '';
 
+						let bankrupt = false;
+
 						if (coins < -1) {
+							bankrupt = true;
+
 							carryOver = 0;
 							bonusTime = 0;
 							maxTime = 60;
@@ -369,6 +513,26 @@
 						}
 
 						if (correct < 0) {
+							if (!bankrupt) {
+								canRecover = true;
+								localStorage.setItem('canRecover', 'true');
+
+								recoveryData.recoveryCoins = coins;
+								recoveryData.recoveryCarryOver = carryOver;
+								recoveryData.recoveryBonusTime = bonusTime;
+								recoveryData.recoveryMaxTime = maxTime;
+								recoveryData.recoveryMultiplier = multiplier;
+
+								localStorage.setItem('recoveryCoins', coins.toString());
+								localStorage.setItem('recoveryCarryOver', carryOver.toString());
+								localStorage.setItem('recoveryBonusTime', bonusTime.toString());
+								localStorage.setItem('recoveryMaxTime', maxTime.toString());
+								localStorage.setItem('recoveryMultiplier', multiplier.toString());
+							} else {
+								canRecover = false;
+								localStorage.setItem('canRecover', 'false');
+							}
+
 							carryOver = parseInt(localStorage.getItem('carryOver') || '0');
 							bonusTime = parseInt(localStorage.getItem('bonusTime') || '0');
 							maxTime = parseInt(localStorage.getItem('maxTime') || '60');
@@ -383,6 +547,126 @@
 				}, 1000);
 			}}>{correct == -1 ? 'Restart' : 'Start'}</button
 		>
+		{#if canRecover}
+			<hr class="break" />
+			<div>
+				<b>You could launch with (based on the automatically saved recovery):</b>
+				<ul class="launch">
+					<li>
+						<span class="em"
+							>{recoveryData.recoveryCarryOver
+								? recoveryData.recoveryCarryOver.toString() + 'x'
+								: 'No'}</span
+						> Carry Over
+					</li>
+					<li>
+						<span class="em"
+							>{recoveryData.recoveryBonusTime
+								? recoveryData.recoveryBonusTime.toString() + ' sec'
+								: 'No'}</span
+						> Bonus Time
+					</li>
+					<li><span class="em">{recoveryData.recoveryMaxTime} sec</span> Max Time</li>
+					<li>
+						<span class="em"
+							>{recoveryData.recoveryCoins ? recoveryData.recoveryCoins + 1 : 'No'}</span
+						>
+						coins
+					</li>
+					<li>
+						<span class="em">{recoveryData.recoveryMultiplier}x</span> Multiplier
+					</li>
+				</ul>
+			</div>
+			<button
+				class="button recover"
+				on:click={() => {
+					showBar = true;
+
+					inputColor = 'black';
+					inputBackgroundColor = 'transparent';
+					inputBorderRadius = '0';
+
+					highScoreColor = 'black';
+					highScoreBackgroundColor = 'transparent';
+					highScoreBorderRadius = '0';
+
+					userInput = '';
+					correct = 0;
+					secondsLeft = 10;
+					highScore = parseInt(localStorage.getItem('highScore') || '0');
+					highScore -= 5;
+					localStorage.setItem('highScore', highScore.toString());
+
+					coins = recoveryData.recoveryCoins + 1;
+					carryOver = recoveryData.recoveryCarryOver;
+					bonusTime = recoveryData.recoveryBonusTime;
+					maxTime = recoveryData.recoveryMaxTime;
+					multiplier = recoveryData.recoveryMultiplier;
+
+					if (interval != -1) clearInterval(interval);
+					interval = setInterval(() => {
+						secondsLeft--;
+						if (secondsLeft == 0) {
+							secondsLeft = 10;
+							correct--;
+							coins--;
+							userInput = '';
+
+							let bankrupt = false;
+
+							if (coins < -1) {
+								bankrupt = true;
+
+								carryOver = 0;
+								bonusTime = 0;
+								maxTime = 60;
+								localStorage.setItem('carryOver', '0');
+								localStorage.setItem('bonusTime', '0');
+								localStorage.setItem('maxTime', '60');
+
+								if (highScore >= 1) {
+									highScore -= 1;
+									localStorage.setItem('highScore', highScore.toString());
+								}
+
+								correct = -1;
+							}
+
+							if (correct < 0) {
+								if (!bankrupt) {
+									canRecover = true;
+									localStorage.setItem('canRecover', 'true');
+
+									recoveryData.recoveryCoins = coins;
+									recoveryData.recoveryCarryOver = carryOver;
+									recoveryData.recoveryBonusTime = bonusTime;
+									recoveryData.recoveryMaxTime = maxTime;
+
+									localStorage.setItem('recoveryCoins', coins.toString());
+									localStorage.setItem('recoveryCarryOver', carryOver.toString());
+									localStorage.setItem('recoveryBonusTime', bonusTime.toString());
+									localStorage.setItem('recoveryMaxTime', maxTime.toString());
+								} else {
+									canRecover = false;
+									localStorage.setItem('canRecover', 'false');
+								}
+
+								carryOver = parseInt(localStorage.getItem('carryOver') || '0');
+								bonusTime = parseInt(localStorage.getItem('bonusTime') || '0');
+								maxTime = parseInt(localStorage.getItem('maxTime') || '60');
+								multiplier = 1;
+
+								highScore = parseInt(localStorage.getItem('highScore') || '0');
+								coins = highScore * 2;
+
+								clearInterval(interval);
+							}
+						}
+					}, 1000);
+				}}>Recover for 5💎</button
+			>
+		{/if}
 	{/if}
 </main>
 <footer class="bottom">
@@ -673,7 +957,18 @@
 	}
 
 	.multiplier:hover:before {
-		content: '$ Buy for 10 coins [no save]';
+		content: '$ Buy for 10 coins [not saved]';
+	}
+
+	.done {
+		background-color: lightsalmon;
+		color: black;
+		width: 30ch;
+	}
+
+	.done:hover {
+		background-color: coral;
+		color: whitesmoke;
 	}
 
 	.danger {
@@ -689,6 +984,17 @@
 
 	.start:hover {
 		background-color: green;
+		color: white;
+	}
+
+	.recover {
+		background-color: lightblue;
+		color: black;
+		font-size: 1.5em;
+	}
+
+	.recover:hover {
+		background-color: var(--accent);
 		color: white;
 	}
 
