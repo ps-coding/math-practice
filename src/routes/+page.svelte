@@ -356,14 +356,13 @@
 					highScoreBorderRadius = '0';
 
 					showBar = false;
-					secondsLeft = 10;
+					secondsLeft = 0;
 
 					let countdown = setInterval(() => {
-						secondsLeft = 0;
 						correct--;
 						coins--;
 
-						if (correct <= -1) {
+						if (correct <= -1 || coins < -1) {
 							clearInterval(countdown);
 
 							showBar = true;
