@@ -131,6 +131,9 @@
 			{/if}
 		</div>
 	{/if}
+	{#if correct >= 0 && coins == -1}
+		<span class="danger">In Danger of Bankruptcy</span>
+	{/if}
 </header>
 <main>
 	{#if highScore > 0}
@@ -215,7 +218,7 @@
 								coins--;
 								userInput = '';
 
-								if (coins < 0) {
+								if (coins < -1) {
 									carryOver = 0;
 									bonusTime = 0;
 									maxTime = 60;
@@ -349,7 +352,7 @@
 						coins--;
 						userInput = '';
 
-						if (coins < 0) {
+						if (coins < -1) {
 							carryOver = 0;
 							bonusTime = 0;
 							maxTime = 60;
@@ -383,7 +386,9 @@
 	{/if}
 </main>
 <footer class="bottom">
-	<a href="/about">About</a> · Copyright &copy; 2023{yearTag} Prasham Shah. All rights reserved.
+	<a href="/about">About</a> ·
+	<small><i>Copyright &copy; 2023{yearTag} Prasham Shah. All rights reserved.</i></small>
+	·
 	<a href="https://shahprasham.com">⧉ Portfolio</a>
 </footer>
 
@@ -407,6 +412,7 @@
 		justify-content: space-around;
 		align-items: center;
 		align-content: center;
+		flex-wrap: wrap;
 	}
 
 	.outerTitle {
@@ -535,6 +541,7 @@
 		background-color: yellow;
 		color: black;
 		width: 17ch;
+		margin-left: 10px;
 	}
 
 	.coins:hover {
@@ -575,6 +582,7 @@
 		background-color: lightskyblue;
 		color: black;
 		width: 30ch;
+		margin-left: 10px;
 	}
 
 	.bonusTime:hover {
@@ -594,6 +602,7 @@
 		background-color: lightcoral;
 		color: black;
 		width: 30ch;
+		margin-left: 10px;
 	}
 
 	.increaseMax:hover {
@@ -613,6 +622,7 @@
 		background-color: lightskyblue;
 		color: black;
 		width: 30ch;
+		margin-left: 10px;
 	}
 
 	.carryOver:hover {
@@ -666,6 +676,11 @@
 		content: '$ Buy for 10 coins [no save]';
 	}
 
+	.danger {
+		color: red;
+		margin-left: 10px;
+	}
+
 	.start {
 		background-color: lightgreen;
 		color: black;
@@ -713,33 +728,5 @@
 
 	.launch {
 		margin-top: 5px;
-	}
-
-	/* Media Queries */
-	@media screen and (max-width: 950px) {
-		.top {
-			justify-content: center;
-			flex-wrap: wrap;
-		}
-
-		.coins {
-			margin-left: 10px;
-		}
-
-		.bonusTime {
-			margin-left: 10px;
-		}
-
-		.carryOver {
-			margin-left: 10px;
-		}
-
-		.increaseMax {
-			margin-left: 10px;
-		}
-
-		.title {
-			flex-basis: 100%;
-		}
 	}
 </style>
