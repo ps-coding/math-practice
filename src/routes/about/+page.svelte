@@ -57,9 +57,9 @@
 			<i>
 				You can go bankrupt if you spend a lot of money and can't pay for the incorrect question,
 				resulting in you not only losing the round but also losing all powerups you may have saved
-				using a checkpoint --- specifically, if the coin value hits -2, you lose. Before you hit
-				this debt value, you will be warned so you know that a lot is riding on that question. Spend
-				wisely.
+				using a checkpoint --- specifically, if the coin value hits -2, you lose. You also lose a
+				gem or high score point for going bankrupt if you have at least one gem. Before you hit this
+				debt value, you will be warned so you know that a lot is riding on that question.
 			</i>
 		</small>
 	</li>
