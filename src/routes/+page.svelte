@@ -116,10 +116,8 @@
 				<button
 					class="button bonusTime"
 					on:click={() => {
-						if (coins >= 10) {
-							coins -= 10;
-							bonusTime += 2;
-						}
+						coins -= 10;
+						bonusTime += 2;
 					}}
 					><span
 						>⚡ Bonus Time ({bonusTime != 0 ? bonusTime.toString() + ' sec ' : ''}to {bonusTime + 2}
@@ -131,10 +129,8 @@
 				<button
 					class="button carryOver"
 					on:click={() => {
-						if (coins >= 30) {
-							coins -= 30;
-							carryOver++;
-						}
+						coins -= 30;
+						carryOver++;
 					}}
 					><span
 						>⚡ Carry Over Time ({carryOver != 0 ? carryOver.toString() + 'x ' : ''}to {carryOver +
@@ -146,10 +142,8 @@
 				<button
 					class="button increaseMax"
 					on:click={() => {
-						if (coins >= 20) {
-							coins -= 20;
-							maxTime += 20;
-						}
+						coins -= 20;
+						maxTime += 20;
 					}}><span>↑ Max Time ({maxTime} sec to {maxTime + 20} sec)</span></button
 				>
 			{/if}
@@ -157,6 +151,30 @@
 	{/if}
 	{#if correct >= 0 && coins == -1}
 		<span class="danger">In Danger of Bankruptcy</span>
+		{#if highScore >= 5 && showBar}
+			<button
+				class="button saveme"
+				on:click={() => {
+					clearInterval(interval);
+
+					correct = -1;
+
+					canRecover = false;
+					localStorage.setItem('canRecover', 'false');
+
+					carryOver = parseInt(localStorage.getItem('carryOver') || '0');
+					bonusTime = parseInt(localStorage.getItem('bonusTime') || '0');
+					maxTime = parseInt(localStorage.getItem('maxTime') || '60');
+					multiplier = 1;
+
+					highScore = parseInt(localStorage.getItem('highScore') || '0');
+					highScore -= 5;
+					localStorage.setItem('highScore', highScore.toString());
+
+					coins = highScore * 2;
+				}}>Keep Existing Checkpoint for 5💎</button
+			>
+		{/if}
 	{/if}
 </header>
 <main>
@@ -308,7 +326,7 @@
 			>Answer in <span class="em">{secondsLeft}</span>
 			second{secondsLeft == 1 ? '' : 's'}</span
 		>
-		{#if correct >= 0 && coins >= 50 && highScore >= 25 && showBar}
+		{#if coins >= 50 && highScore >= 25 && showBar}
 			<button
 				class="button checkpoint"
 				on:click={() => {
@@ -324,14 +342,12 @@
 				}}><span>✓ Checkpoint: Save Powerups</span></button
 			>
 		{/if}
-		{#if correct >= 0 && coins >= 10 && showBar}
+		{#if coins >= 10 && showBar}
 			<button
 				class="button multiplier"
 				on:click={() => {
-					if (coins >= 10) {
-						coins -= 10;
-						multiplier++;
-					}
+					coins -= 10;
+					multiplier++;
 				}}
 				><span
 					>× Coin Multiplier ({multiplier != 1 ? multiplier.toString() + 'x ' : ''}to {multiplier +
@@ -458,7 +474,6 @@
 			</ul>
 		</div>
 		<button
-			hidden={correct >= 0}
 			class={'button ' + (correct == -1 ? 'reset' : 'start')}
 			on:click={() => {
 				showBar = true;
@@ -546,7 +561,7 @@
 				}, 1000);
 			}}>{correct == -1 ? 'Restart' : 'Start'}</button
 		>
-		{#if canRecover}
+		{#if canRecover && highScore >= 5}
 			<hr class="break" />
 			<div>
 				<b>You could launch with (based on the automatically saved recovery):</b>
@@ -956,7 +971,7 @@
 	}
 
 	.multiplier:hover:before {
-		content: '$ Buy for 10 coins [not saved]';
+		content: '$ Buy for 10 coins [no checkpoint]';
 	}
 
 	.done {
@@ -973,6 +988,17 @@
 	.danger {
 		color: red;
 		margin-left: 10px;
+	}
+
+	.saveme {
+		background-color: lightslategray;
+		color: black;
+		width: 35ch;
+	}
+
+	.saveme:hover {
+		background-color: brown;
+		color: white;
 	}
 
 	.start {

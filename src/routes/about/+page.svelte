@@ -60,7 +60,9 @@
 				resulting in you not only losing the round but also losing all powerups you may have saved
 				using a checkpoint --- specifically, if the coin value hits -2, you lose. You also lose a
 				gem or high score point for going bankrupt if you have at least one gem. Before you hit this
-				debt value, you will be warned so you know that a lot is riding on that question.
+				debt value, you will be warned so you know that a lot is riding on that question. There is a
+				way out if you have enough gems, however: you can use 5 gems to save your checkpoints,
+				although recovery will be disabled and you will still lose regardless.
 			</i>
 		</small>
 	</li>
@@ -137,11 +139,14 @@
 		recovery costs 5 gems, while a checkpoint costs 25 gems along with 50 coins. However, a
 		checkpoint can be saved at any time during a game, and assuming you do not go bankrupt, the
 		powerups saved in a checkpoint can help you in every game just by pressing "start" without any
-		additional fee. However, coins are not saved in checkpoints, nor are multipliers. Meanwhile,
-		with recovery, you can only save what you had right before you lost, but you can save coins too.
-		Recovery also only lasts once (i.e. you have to pay every time you want to recover from the last
-		round). However, it does save the coin multiplier, which checkpoints don't. So, based on the
-		context, the choice is yours.</i
+		additional fee. Moreover, if you have 5 gems, you can save your checkpoint from being dissolved
+		by bankruptcy. However, coins are not saved in checkpoints, nor are multipliers. Meanwhile, with
+		recovery, you can only save what you had right before you lost, but you can save coins and
+		multipliers too. Recovery only lasts once (i.e. you have to pay every time you want to recover
+		from the last round), and bankruptcy is always fatal, but it is much cheaper. So, based on the
+		context, the choice is yours. Note that you have to actively save a checkpoint, but can use it
+		for free, while recovery data is saved automatically, but you have to pay each time to use it.
+		They accomplish similar goals, but in most other ways, they are opposites.</i
 	></small
 >
 <h2 id="contribute">How to contribute</h2>
