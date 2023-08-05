@@ -402,38 +402,35 @@
 
 								correct = -1;
 							}
+							if (!bankrupt) {
+								canRecover = true;
+								localStorage.setItem('canRecover', 'true');
 
-							if (correct < 0) {
-								if (!bankrupt) {
-									canRecover = true;
-									localStorage.setItem('canRecover', 'true');
+								recoveryData.recoveryCoins = coins;
+								recoveryData.recoveryCarryOver = carryOver;
+								recoveryData.recoveryBonusTime = bonusTime;
+								recoveryData.recoveryMaxTime = maxTime;
+								recoveryData.recoveryMultiplier = multiplier;
 
-									recoveryData.recoveryCoins = coins;
-									recoveryData.recoveryCarryOver = carryOver;
-									recoveryData.recoveryBonusTime = bonusTime;
-									recoveryData.recoveryMaxTime = maxTime;
-									recoveryData.recoveryMultiplier = multiplier;
-
-									localStorage.setItem('recoveryCoins', coins.toString());
-									localStorage.setItem('recoveryCarryOver', carryOver.toString());
-									localStorage.setItem('recoveryBonusTime', bonusTime.toString());
-									localStorage.setItem('recoveryMaxTime', maxTime.toString());
-									localStorage.setItem('recoveryMultiplier', multiplier.toString());
-								} else {
-									canRecover = false;
-									localStorage.setItem('canRecover', 'false');
-								}
-
-								carryOver = parseInt(localStorage.getItem('carryOver') || '0');
-								bonusTime = parseInt(localStorage.getItem('bonusTime') || '0');
-								maxTime = parseInt(localStorage.getItem('maxTime') || '60');
-								multiplier = 1;
-
-								highScore = parseInt(localStorage.getItem('highScore') || '0');
-								coins = highScore * 2;
-
-								clearInterval(interval);
+								localStorage.setItem('recoveryCoins', coins.toString());
+								localStorage.setItem('recoveryCarryOver', carryOver.toString());
+								localStorage.setItem('recoveryBonusTime', bonusTime.toString());
+								localStorage.setItem('recoveryMaxTime', maxTime.toString());
+								localStorage.setItem('recoveryMultiplier', multiplier.toString());
+							} else {
+								canRecover = false;
+								localStorage.setItem('canRecover', 'false');
 							}
+
+							carryOver = parseInt(localStorage.getItem('carryOver') || '0');
+							bonusTime = parseInt(localStorage.getItem('bonusTime') || '0');
+							maxTime = parseInt(localStorage.getItem('maxTime') || '60');
+							multiplier = 1;
+
+							highScore = parseInt(localStorage.getItem('highScore') || '0');
+							coins = highScore * 2;
+
+							clearInterval(interval);
 						}
 					}, 300);
 				}}>I'm Done</button
