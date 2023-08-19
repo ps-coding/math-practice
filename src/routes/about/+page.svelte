@@ -52,25 +52,34 @@
 	</li>
 	<li>
 		You additionally earn a coin for each correct answer and lose a coin for not answering the
-		question in time
+		question in time (but any coin multiplier only applies when gaining coins, not losing them)
 		<br />
 		<small>
 			<i>
 				You can go bankrupt if you spend a lot of money and can't pay for the incorrect question,
 				resulting in you not only losing the round but also losing all powerups you may have saved
-				using a checkpoint --- specifically, if the coin value hits -2, you lose. You also lose a
-				gem or high score point for going bankrupt if you have at least one gem. Before you hit this
-				debt value, you will be warned so you know that a lot is riding on that question. There is a
-				way out if you have enough gems, however: you can use 5 gems to save your checkpoints,
-				although recovery will be disabled and you will still lose regardless.
+				using a checkpoint --- specifically, if the coin value hits -2, you lose. You additionally
+				lose the ability to recover next round. You also lose a gem or high score point for going
+				bankrupt if you have at least one gem. Before you hit this debt value, you will be warned so
+				you know that a lot is riding on that question. There is a way out if you have enough gems,
+				however: you can use 5 gems to save your checkpoints, although recovery will be disabled and
+				you will still lose regardless. However, if you have gotten sufficiently far with your
+				checkpoints, spending 5 gems to save them should be an easy decision. Oh, and don't even <i
+					>try</i
+				> refreshing or navigating away, since that will automatically trigger bankruptcy as well. All
+				links have been set to open in another tab except the link to this page, which will still also
+				open in a separate tab in the middle of the game to prevent accidental bankruptcy.
 			</i>
 		</small>
 	</li>
 </ul>
 <h3 id="powerups">Powerups</h3>
+<p>Powerups appear as they become available and include the following:</p>
 <ul>
 	<li>
-		2 coins: 3 seconds of extra time on the current question (default time 10 sec per question)
+		2 coins: 3 seconds of extra time on the current question (default time 10 sec per question) -
+		click the coin counter to access this powerup since it does not have a dedicated button; the
+		coin indicator will turn yellow when you have enough coins for this powerup
 	</li>
 	<li>
 		10 coins: Increment (by +2 sec) the amount of extra time granted after each answered question
@@ -80,7 +89,7 @@
 		10 coins: Increment (by +1x) the coin multiplier granted after each answered question (default
 		1x)
 		<br />
-		<small><i>This does not save in checkpoints.</i></small>
+		<small><i>This does not save in checkpoints, only in recovery.</i></small>
 	</li>
 	<li>
 		20 coins: Increment (by +20 sec) the cap on the maximum amount of time you can start with after
@@ -98,14 +107,16 @@
 			><i
 				>Design Note: It might seem weird that you have to give up high score points for this. The
 				reason why it is required to give up gems is to prevent people who have reached very high
-				levels from just buying a power up, clicking checkpoint, refreshing, and doing the same
-				thing over an over again since if they start with the same number of initial points
-				determined by their very great high score, they will always have enough money to keep going.
-				In contrast, the way it is implemented, after a certain amount of checkpoints, they will run
-				out of gems and thus not start with enough coins to pay for a checkpoint, so they will have
-				to work their way up to getting that high score again. However, if you can buy them,
-				checkpoints are worth it, since they help you reach higher levels much more easily and make
-				up for the cost.</i
+				levels from just buying a power up, clicking checkpoint, counting down, restarting, and
+				doing the same thing over an over again since if they start with the same number of initial
+				points determined by their very great high score, they will always have enough money to keep
+				going. In contrast, the way this is currently implemented, after a certain amount of
+				checkpoints, they will run out of gems and thus not start with enough coins to pay for a
+				checkpoint, so they will have to work their way up to getting that high score again.
+				However, if you can buy them, checkpoints are worth it, since they help you reach higher
+				levels much more easily and make up for the cost. Bankruptcy is another feature intended to
+				mitigate abuse and encourage wise spending, and it not only works with bankruptcy but also
+				recovery, making it a good additional failsafe.</i
 			></small
 		>
 	</li>
@@ -117,19 +128,25 @@
 		with the same powerups (including, unlike checkpoints, the same coin multiplier) and the same
 		number of coins as you ended with when you died at level one in the last game
 	</li>
-	<li>This feature is only available if you did not go bankrupt</li>
+	<li>
+		This feature is only available if you did not go bankrupt, and it only saves once you drop back
+		to level one, so don't try any hacks
+	</li>
 	<li>
 		To remove the annoying part of watching the timer count down and waiting to lose every level if
 		you just want to stop playing yet save your recovery data, there is an "I'm Done" button that
 		simply disables all buttons and counts down the levels very quickly, and, assuming you did not
-		go bankrupt in that process, stores all recovery information after you die
+		go bankrupt in that process, stores all recovery information after you willingly die at level
+		one
 	</li>
 	<li>
 		The "I'm Done" button is the best way to end a game in the middle, instead of just refreshing
-		the page, since refreshing the page does not save recovery data (the only time it could be
-		beneficial just to refresh is if you think you are going to go bankrupt and want to save your
-		gems, and even then if you are playing this competitively with someone else, you might come up
-		with a rule against refreshing)
+		the page, since refreshing triggers bankruptcy to stop people from abusing game features)
+	</li>
+	<li>
+		Note that there is the major risk that if you are going to go bankrupt and you still click the
+		"I'm Done" button, you will not have the chance to answer more questions to boost yourself up
+		out of bankruptcy or to pay the fee to keep you checkpoints
 	</li>
 </ul>
 <small
@@ -138,21 +155,26 @@
 		each has its pros and cons, and as a strategic player it is up to you to decide. Remember,
 		recovery costs 5 gems, while a checkpoint costs 25 gems along with 50 coins. However, a
 		checkpoint can be saved at any time during a game, and assuming you do not go bankrupt, the
-		powerups saved in a checkpoint can help you in every game just by pressing "start" without any
-		additional fee. Moreover, if you have 5 gems, you can save your checkpoint from being dissolved
-		by bankruptcy. However, coins are not saved in checkpoints, nor are multipliers. Meanwhile, with
-		recovery, you can only save what you had right before you lost, but you can save coins and
-		multipliers too. Recovery only lasts once (i.e. you have to pay every time you want to recover
-		from the last round), and bankruptcy is always fatal, but it is much cheaper. So, based on the
-		context, the choice is yours. Note that you have to actively save a checkpoint, but can use it
-		for free, while recovery data is saved automatically, but you have to pay each time to use it.
-		They accomplish similar goals, but in most other ways, they are opposites.</i
+		powerups saved in a checkpoint can help you in every game just by pressing the normal "start" or
+		"restart" button without any additional fee. Moreover, if you have 5 gems, you can save your
+		checkpoint from being dissolved by bankruptcy. However, coins are not saved in checkpoints
+		(which can sometimes be a good thing if your high score gives you more coins), nor are
+		multipliers (which is almost certainly a negative). Meanwhile, with recovery, you can only save
+		what you had right before you lost, but you can save coins and multipliers too (you <i>have</i> to
+		start with the same number of coins as you ended with when you use recovery though, so it can be
+		a bad thing if you bought a lot and did not end with much). Recovery only lasts once (i.e. you have
+		to pay every time you want to recover from the last round), and bankruptcy is always fatal, but it
+		is much cheaper. So, based on the context, the choice is yours. Note that you have to actively save
+		a checkpoint, but can use it for free, while recovery data is saved automatically, but you have to
+		pay each time to use it. They accomplish similar goals, but in most other ways, they are opposites.</i
 	></small
 >
 <h2 id="contribute">How to contribute</h2>
 <p>
 	Feel free to play around with/contribute to this project if you wish, although if you publish a
-	fork, please give credit.
+	fork, please give full credit including writing, conspicuously, my name, my Github profile, and
+	the location of my original version, including a hyperlink to the repository, in the README.md
+	file and somewhere obvious on the website.
 </p>
 <ul>
 	<li>Make sure you have <a href="https://nodejs.org/en/" target="_blank">⧉ node</a> and npm</li>
@@ -169,12 +191,18 @@
 </ul>
 <i
 	>Some stylistic inspiration (mainly just regarding the "automatic enter" aspect of the text field
-	input) was taken from <a href="https://mathtrainer.ai">⧉ Math Trainer: Mental Math Competition</a
-	>, but no code was copied. The current state of the project is solely based on my ideas, and I am
-	the only developer, but I welcome ideas and contributions. There are many math apps and games, but
-	I hope this offers a unique combination of simplicity, strategy, and challenging computation.
-	Enjoy!</i
+	input) was taken from <a href="https://mathtrainer.ai" target="_blank"
+		>⧉ Math Trainer: Mental Math Competition</a
+	>, but no code was copied, and all of the powerup features, leveling features, coin systems,
+	bankruptcy, the algorithm for generating questions, etc. are mine alone as far as I am aware. The
+	current state of the project is solely based on my ideas, and I am the only developer, but I
+	welcome ideas and contributions. There are many math apps and games, but I hope this offers a
+	unique combination of simplicity, strategy, and challenging computation. If you like this website,
+	please share it and experiment with different ways to use this in friendly competitions. Enjoy!</i
 >
 <br />
 <br />
-<small><b>Access my personal website <a href="https://shahprasham.com">⧉ here</a>.</b></small>
+<small
+	><b>Access my personal website <a target="_blank" href="https://shahprasham.com">⧉ here</a>.</b
+	></small
+>

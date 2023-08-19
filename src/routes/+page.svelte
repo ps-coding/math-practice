@@ -1,4 +1,5 @@
 <script>
+	import { beforeNavigate } from '$app/navigation';
 	import { getProblem } from '$lib/problem';
 	import { onMount } from 'svelte';
 
@@ -23,6 +24,26 @@
 		recoveryCarryOver: 0,
 		recoveryMultiplier: 1
 	};
+
+	beforeNavigate((bn) => {
+		if (correct >= 0) {
+			carryOver = 0;
+			bonusTime = 0;
+			maxTime = 60;
+			localStorage.setItem('carryOver', '0');
+			localStorage.setItem('bonusTime', '0');
+			localStorage.setItem('maxTime', '60');
+
+			if (highScore >= 1) {
+				highScore -= 1;
+				localStorage.setItem('highScore', highScore.toString());
+			}
+
+			correct = -1;
+			canRecover = false;
+			localStorage.setItem('canRecover', 'false');
+		}
+	});
 
 	onMount(() => {
 		highScore = parseInt(localStorage.getItem('highScore') || '0');
@@ -150,7 +171,7 @@
 		</div>
 	{/if}
 	{#if correct >= 0 && coins == -1}
-		<span class="danger">In Danger of Bankruptcy</span>
+		<span class="danger">In Danger of Bankruptcy! (Reloading will also trigger this.)</span>
 		{#if highScore >= 5 && showBar}
 			<button
 				class="button saveme"
@@ -681,10 +702,10 @@
 	{/if}
 </main>
 <footer class="bottom">
-	<a href="/about">About</a> ·
+	<a href="/about" target={correct >= 0 ? '_blank' : '_self'}>About</a> ·
 	<small><i>Copyright &copy; 2023{yearTag} Prasham Shah. All rights reserved.</i></small>
 	·
-	<a href="https://shahprasham.com">⧉ Portfolio</a>
+	<a href="https://shahprasham.com" target="_blank">⧉ Portfolio</a>
 </footer>
 
 <style>
