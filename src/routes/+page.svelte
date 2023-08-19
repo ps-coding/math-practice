@@ -108,7 +108,18 @@
 
 <header class="top">
 	<!-- svelte-ignore a11y-invalid-attribute -->
-	<h1 class="outerTitle"><a class="title" href="javascript:location.reload()">Math Practice</a></h1>
+	<h1 class="outerTitle">
+		<a
+			class="title"
+			href={correct >= 0
+				? 'javascript:navigator.clipboard.writeText("https://math.shahprasham.com")'
+				: '/'}>Math Practice</a
+		>
+		{#if correct >= 0}
+			<br />
+			<small>🔗 Copy link</small>
+		{/if}
+	</h1>
 	{#if correct >= 0 && coins > 0 && showBar}
 		<div>
 			<button
