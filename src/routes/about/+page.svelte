@@ -47,6 +47,11 @@
 		restart
 	</li>
 	<li>
+		Your high score is the highest level you successfully reach (not necessarily answer), but
+		reaching the first level (i.e. just pressing the play button) does not count; this is why the
+		high score seems to jump from 0 to 2 when you reach level 2 (no, that is <i>not</i> a bug)
+	</li>
+	<li>
 		Your high score is saved locally, and your starting number of coins for each round is calculated
 		based on your high score
 	</li>
@@ -67,8 +72,9 @@
 				checkpoints, spending 5 gems to save them should be an easy decision. Oh, and don't even <i
 					>try</i
 				> refreshing or navigating away, since that will automatically trigger bankruptcy as well. All
-				links have been set to open in another tab except the link to this page, which will still also
-				open in a separate tab in the middle of the game to prevent accidental bankruptcy.
+				links have been set to always open in new tab except the link to this about page from the home
+				page, which will open in the same tab unless you are in the middle of the game, to prevent accidental
+				bankruptcy.
 			</i>
 		</small>
 	</li>
