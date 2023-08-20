@@ -196,8 +196,9 @@
 		>
 		{#if correct >= 0}
 			<br />
-			<small>🔗 Copy link</small>
-			<small>Do <i>not</i> try to refresh - you may go bankrupt.</small>
+			<small>Above button copies the link 🔗</small>
+			·
+			<small>Do <i>not</i> try to refresh</small>
 		{/if}
 	</h1>
 	{#if correct >= 0 && coins > 0 && showBar}
