@@ -47,7 +47,7 @@
 		<li>
 			Your high score reflects the highest level you have reached, and increasing that is the main
 			purpose of the game, but you can sacrifice some gems (high score points) to gain an advantage
-			if you think it will help you in the long term
+			by buying recovery or checkpoints, for example, if you think it will help you in the long term
 		</li>
 		<li>
 			If you have no coins left, and you subsequently get two questions wrong in a row (bringing

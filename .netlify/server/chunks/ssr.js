@@ -57,6 +57,10 @@ function escape(value, is_attr = false) {
   }
   return escaped + str.substring(last);
 }
+function escape_attribute_value(value) {
+  const should_escape = typeof value === "string" || value && typeof value === "object";
+  return should_escape ? escape(value, true) : value;
+}
 const missing_component = {
   $$render: () => ""
 };
@@ -113,14 +117,22 @@ function add_attribute(name, value, boolean) {
   const assignment = boolean && value === true ? "" : `="${escape(value, true)}"`;
   return ` ${name}${assignment}`;
 }
+function style_object_to_string(style_object) {
+  return Object.keys(style_object).filter((key) => style_object[key]).map((key) => `${key}: ${escape_attribute_value(style_object[key])};`).join(" ");
+}
+function add_styles(style_object) {
+  const styles = style_object_to_string(style_object);
+  return styles ? ` style="${styles}"` : "";
+}
 export {
   setContext as a,
   subscribe as b,
   create_ssr_component as c,
   add_attribute as d,
   escape as e,
-  null_to_empty as f,
+  add_styles as f,
   getContext as g,
+  null_to_empty as h,
   missing_component as m,
   noop as n,
   safe_not_equal as s,
