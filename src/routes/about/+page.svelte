@@ -25,6 +25,43 @@
 		<li><a href="#contribute">How to contribute</a></li>
 	</ul>
 </summary>
+<h2>Fast facts</h2>
+<ul>
+	<li>
+		The question types are addition, subtraction, multiplication, division, exponentiation, and
+		roots
+	</li>
+	<li>The base time is 10 seconds per question, but that can change</li>
+	<li>
+		If you get a question right, your coins increase by the coin multiplier, but if you get a
+		question wrong, your coins only decrease by 1
+	</li>
+	<li>
+		Coins can be used to buy powerups, which are listed below; however, during the game you can just
+		hover over the powerups as they appear to see what they do and how much they cost (note the coin
+		button does activate a temporary powerup too)
+	</li>
+	<li>
+		If you have no coins left, and you subsequently get two questions wrong in a row (bringing your
+		coin count to "-2"), bankruptcy will be triggered, resulting in you losing all your checkpoints
+		and recovery data (unless you pay five diamonds to save your recovery data)
+	</li>
+	<li>
+		Recovery is saved automatically once you drop to level zero and saves <i>everything</i>,
+		including your end coins and coin multiplier; checkpoints have to be saved manually, but they
+		can save whenever you want and do not include coins or coin multipliers
+	</li>
+	<li>
+		While you have to pay five diamonds for recovery, you have to pay nothing to reactivate your
+		last checkpoint
+	</li>
+	<li>
+		Click "I'm Done" and wait through the animation to guarantee your progress is saved, since if
+		you refresh, we'll try to do this automatically but some browser's do not support it, in which
+		case we'll assume the worst (that you are trying to cheat out of bankruptcy) and trigger
+		bankruptcy anyway
+	</li>
+</ul>
 <h2 id="how-to-use">How to use</h2>
 <h3 id="question-types">Question types</h3>
 <ul>
@@ -46,11 +83,7 @@
 		If you are on level 1 and you fail to answer the question in time, you lose the game and can
 		restart
 	</li>
-	<li>
-		Your high score is the highest level you successfully reach (not necessarily answer), but
-		reaching the first level (i.e. just pressing the play button) does not count; this is why the
-		high score seems to jump from 0 to 2 when you reach level 2 (no, that is <i>not</i> a bug)
-	</li>
+	<li>Your high score is the highest level you successfully complete (not reach)</li>
 	<li>
 		Your high score is saved locally, and your starting number of coins for each round is calculated
 		based on your high score
@@ -71,10 +104,12 @@
 				you will still lose regardless. However, if you have gotten sufficiently far with your
 				checkpoints, spending 5 gems to save them should be an easy decision. Oh, and don't even <i
 					>try</i
-				> refreshing or navigating away, since that will automatically trigger bankruptcy as well. All
-				links have been set to always open in new tab except the link to this about page from the home
-				page, which will open in the same tab unless you are in the middle of the game, to prevent accidental
-				bankruptcy.
+				> refreshing or navigating away, since that will automatically trigger bankruptcy as well (we
+				try to do a normal countdown procedure automatically before navigation if your browser supports
+				it to try to help you out, but if your browser does not support navigate-away hooks, like most
+				browsers on mobile, the app will assume the worst). All links on the game page have been set
+				to always open in new tab except the link to this about page from the home page, which will open
+				in the same tab unless you are in the middle of the game, to prevent accidental bankruptcy.
 			</i>
 		</small>
 	</li>
@@ -212,3 +247,11 @@
 	><b>Access my personal website <a target="_blank" href="https://shahprasham.com">⧉ here</a>.</b
 	></small
 >
+<br />
+<br />
+<footer>
+	<a href="/about">About</a> ·
+	<small><i>Copyright &copy; 2023 Prasham Shah. All rights reserved.</i></small>
+	·
+	<a href="https://shahprasham.com" target="_blank">⧉ Portfolio</a>
+</footer>

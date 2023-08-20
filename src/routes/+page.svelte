@@ -25,23 +25,80 @@
 		recoveryMultiplier: 1
 	};
 
-	beforeNavigate((bn) => {
-		if (correct >= 0) {
-			carryOver = 0;
-			bonusTime = 0;
-			maxTime = 60;
-			localStorage.setItem('carryOver', '0');
-			localStorage.setItem('bonusTime', '0');
-			localStorage.setItem('maxTime', '60');
+	beforeNavigate(() => {
+		clearInterval(interval);
+		userInput = '';
+		inputEl.disabled = true;
 
-			if (highScore >= 1) {
-				highScore -= 1;
-				localStorage.setItem('highScore', highScore.toString());
+		inputColor = 'black';
+		inputBackgroundColor = 'transparent';
+		inputBorderRadius = '0';
+
+		highScoreColor = 'black';
+		highScoreBackgroundColor = 'transparent';
+		highScoreBorderRadius = '0';
+
+		showBar = false;
+		secondsLeft = 0;
+
+		while (correct > -1 && coins >= -1) {
+			correct--;
+			coins--;
+		}
+
+		if (correct <= -1 || coins < -1) {
+			localStorage.setItem('started', 'false');
+
+			showBar = true;
+
+			let bankrupt = false;
+
+			if (coins < -1) {
+				bankrupt = true;
+
+				carryOver = 0;
+				bonusTime = 0;
+				maxTime = 60;
+				localStorage.setItem('carryOver', '0');
+				localStorage.setItem('bonusTime', '0');
+				localStorage.setItem('maxTime', '60');
+
+				if (highScore >= 1) {
+					highScore -= 1;
+					localStorage.setItem('highScore', highScore.toString());
+				}
+
+				correct = -1;
+			}
+			if (!bankrupt) {
+				canRecover = true;
+				localStorage.setItem('canRecover', 'true');
+
+				recoveryData.recoveryCoins = coins;
+				recoveryData.recoveryCarryOver = carryOver;
+				recoveryData.recoveryBonusTime = bonusTime;
+				recoveryData.recoveryMaxTime = maxTime;
+				recoveryData.recoveryMultiplier = multiplier;
+
+				localStorage.setItem('recoveryCoins', coins.toString());
+				localStorage.setItem('recoveryCarryOver', carryOver.toString());
+				localStorage.setItem('recoveryBonusTime', bonusTime.toString());
+				localStorage.setItem('recoveryMaxTime', maxTime.toString());
+				localStorage.setItem('recoveryMultiplier', multiplier.toString());
+			} else {
+				canRecover = false;
+				localStorage.setItem('canRecover', 'false');
 			}
 
-			correct = -1;
-			canRecover = false;
-			localStorage.setItem('canRecover', 'false');
+			carryOver = parseInt(localStorage.getItem('carryOver') || '0');
+			bonusTime = parseInt(localStorage.getItem('bonusTime') || '0');
+			maxTime = parseInt(localStorage.getItem('maxTime') || '60');
+			multiplier = 1;
+
+			highScore = parseInt(localStorage.getItem('highScore') || '0');
+			coins = highScore * 2;
+
+			clearInterval(interval);
 		}
 	});
 
@@ -63,6 +120,28 @@
 				recoveryCarryOver: parseInt(localStorage.getItem('recoveryCarryOver') || '0'),
 				recoveryMultiplier: parseInt(localStorage.getItem('recoveryMultiplier') || '1')
 			};
+		}
+
+		const started = localStorage.getItem('started') == 'true';
+
+		if (started) {
+			carryOver = 0;
+			bonusTime = 0;
+			maxTime = 60;
+			localStorage.setItem('carryOver', '0');
+			localStorage.setItem('bonusTime', '0');
+			localStorage.setItem('maxTime', '60');
+
+			if (highScore >= 1) {
+				highScore -= 1;
+				localStorage.setItem('highScore', highScore.toString());
+			}
+
+			correct = -1;
+			canRecover = false;
+			localStorage.setItem('canRecover', 'false');
+
+			localStorage.setItem('started', 'false');
 		}
 	});
 
@@ -118,6 +197,7 @@
 		{#if correct >= 0}
 			<br />
 			<small>🔗 Copy link</small>
+			<small>Do <i>not</i> try to refresh - you may go bankrupt.</small>
 		{/if}
 	</h1>
 	{#if correct >= 0 && coins > 0 && showBar}
@@ -216,7 +296,7 @@
 			style:color={highScoreColor}
 			style:background-color={highScoreBackgroundColor}
 			style:border-radius={highScoreBorderRadius}
-			>High Score: <span class="em">{highScore + 1}</span>💎</span
+			>High Score: <span class="em">{highScore}</span>💎</span
 		>
 	{/if}
 
@@ -313,6 +393,8 @@
 								}
 
 								if (correct < 0) {
+									localStorage.setItem('started', 'false');
+
 									if (!bankrupt) {
 										canRecover = true;
 										localStorage.setItem('canRecover', 'true');
@@ -413,6 +495,8 @@
 						if (correct <= -1 || coins < -1) {
 							clearInterval(countdown);
 
+							localStorage.setItem('started', 'false');
+
 							showBar = true;
 
 							let bankrupt = false;
@@ -505,6 +589,8 @@
 		<button
 			class={'button ' + (correct == -1 ? 'reset' : 'start')}
 			on:click={() => {
+				localStorage.setItem('started', 'true');
+
 				showBar = true;
 
 				inputColor = 'black';
@@ -556,6 +642,8 @@
 						}
 
 						if (correct < 0) {
+							localStorage.setItem('started', 'false');
+
 							if (!bankrupt) {
 								canRecover = true;
 								localStorage.setItem('canRecover', 'true');
@@ -624,6 +712,8 @@
 			<button
 				class="button recover"
 				on:click={() => {
+					localStorage.setItem('started', 'true');
+
 					showBar = true;
 
 					inputColor = 'black';
@@ -677,6 +767,8 @@
 							}
 
 							if (correct < 0) {
+								localStorage.setItem('started', 'false');
+
 								if (!bankrupt) {
 									canRecover = true;
 									localStorage.setItem('canRecover', 'true');
