@@ -431,12 +431,10 @@
 						}, 1000);
 
 						inputEl.disabled = false;
+						inputEl.tabIndex = -1;
 						inputEl.focus();
-						setTimeout(() => {
-							inputEl.focus();
-							inputEl.select();
-							inputEl.focus();
-						}, 10);
+						inputEl.tabIndex = 0;
+						inputEl.focus();
 					}, 500);
 				}
 			}}
