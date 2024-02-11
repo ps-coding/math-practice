@@ -324,6 +324,7 @@
 		<input
 			class="answer"
 			type="number"
+			inputmode="numeric"
 			placeholder="Answer"
 			autofocus
 			style:color={inputColor}
@@ -431,6 +432,11 @@
 
 						inputEl.disabled = false;
 						inputEl.focus();
+						setTimeout(() => {
+							inputEl.focus();
+							inputEl.select();
+							inputEl.focus();
+						}, 10);
 					}, 500);
 				}
 			}}
@@ -564,7 +570,8 @@
 					problem.
 					<small
 						><i
-							>Select this option to make cheating by pasting the question into a calculator harder.</i
+							>Unselect this option to make cheating by pasting the question into a calculator
+							harder.</i
 						></small
 					></label
 				>
