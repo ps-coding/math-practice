@@ -431,9 +431,6 @@
 						}, 1000);
 
 						inputEl.disabled = false;
-						inputEl.tabIndex = -1;
-						inputEl.focus();
-						inputEl.tabIndex = 0;
 						inputEl.focus();
 					}, 500);
 				}
