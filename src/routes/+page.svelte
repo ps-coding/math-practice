@@ -435,11 +435,6 @@
 						inputEl.autofocus = true;
 						inputEl.focus();
 						inputEl.click();
-						setTimeout(() => {
-							inputEl.autofocus = true;
-							inputEl.focus();
-							inputEl.click();
-						}, 100);
 					}, 500);
 				}
 			}}
