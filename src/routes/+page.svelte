@@ -432,6 +432,7 @@
 
 						inputEl.disabled = false;
 						inputEl.focus();
+						inputEl.click();
 					}, 500);
 				}
 			}}
