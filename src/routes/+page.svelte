@@ -431,8 +431,15 @@
 						}, 1000);
 
 						inputEl.disabled = false;
+
+						inputEl.autofocus = true;
 						inputEl.focus();
 						inputEl.click();
+						setTimeout(() => {
+							inputEl.autofocus = true;
+							inputEl.focus();
+							inputEl.click();
+						}, 100);
 					}, 500);
 				}
 			}}
