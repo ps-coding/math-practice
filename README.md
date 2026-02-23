@@ -77,6 +77,6 @@ Feel free to play around with/contribute to this project if you wish, although i
 *   Open your browser to the localhost address displayed
 *   Edit the files in the `src/` directory, commit, and submit a request to incorporate your changes
 
-_Some stylistic inspiration (mainly just regarding the "automatic enter" aspect of the text field input) was taken from [⧉ Math Trainer: Mental Math Competition](https://mathtrainer.ai/), but no code was copied, and all of the powerup features, leveling features, coin systems, bankruptcy, the algorithm for generating questions, etc. are mine alone as far as I am aware.  
+_Some stylistic inspiration (mainly just regarding the "automatic enter" aspect of the text field input) was taken from [⧉ Math Trainer: Mental Math Competition](https://mathtrainer.ai/), but no code was copied, and all of the powerup features, leveling features, coin systems, bankruptcy, the algorithm for generating questions, etc. are mine alone as far as I am aware._
   
-The current state of the project is solely based on my ideas, and I am the only developer, but I welcome ideas and contributions. There are many math apps and games, but I hope this offers a unique combination of variability, strategy, and challenging computation. If you like this website, please share it and experiment with different ways to use this in friendly competitions. Enjoy!_
+_The current state of the project is solely based on my ideas, and I am the only developer, but I welcome ideas and contributions. There are many math apps and games, but I hope this offers a unique combination of variability, strategy, and challenging computation. If you like this website, please share it and experiment with different ways to use this in friendly competitions. Enjoy!_
